@@ -12,24 +12,26 @@ import (
 func main() {
 	text := "password"
 	conter := 0
-	encodedText := base32.StdEncoding.EncodeToString([]byte(text))
-	key := strings.ToUpper(encodedText)
 
+}
+func HOTP(secret string, counter int) int {
+	decodedText, err := base32.StdEncoding.DecodeString(strings.ToUpper(secret))
+	if err != nil {
+
+	}
 	bs := make([]byte, 8)
-	binary.BigEndian.PutUint64(bs, uint64(conter))
-
-	hash := hmac.New(sha1.New, []byte(key))
+	binary.BigEndian.PutUint64(bs, uint64(counter))
+	hash := hmac.New(sha1.New, []byte(decodedText))
 	hash.Write(bs)
 	h := hash.Sum(nil)
-	dynamictruncation(h)
-
+	code := dynamictruncation(h)
+	return code
 }
 func dynamictruncation(h []byte) int {
 
 	offset := int(low_order_4_bits(h[19]))
 	p := h[offset : offset+4]
 	otp := (last_31_bits(p)) % 1000000
-	println(otp)
 	return otp
 }
 
