@@ -7,12 +7,17 @@ import (
 	"encoding/base32"
 	"encoding/binary"
 	"strings"
+	"time"
 )
 
 func main() {
 	text := "password"
 	conter := 0
 
+}
+func TOTP(secret string) int {
+	counter := time.Now().Unix()
+	HOTP(secret, int(counter)/30)
 }
 func HOTP(secret string, counter int) int {
 	decodedText, err := base32.StdEncoding.DecodeString(strings.ToUpper(secret))
