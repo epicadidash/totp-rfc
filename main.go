@@ -11,13 +11,12 @@ import (
 )
 
 func main() {
-	text := "password"
-	conter := 0
+	println(TOTP(`JBSWY3DPEHPK3PXP`))
 
 }
 func TOTP(secret string) int {
 	counter := time.Now().Unix()
-	HOTP(secret, int(counter)/30)
+	return HOTP(secret, int(counter)/30)
 }
 func HOTP(secret string, counter int) int {
 	decodedText, err := base32.StdEncoding.DecodeString(strings.ToUpper(secret))
